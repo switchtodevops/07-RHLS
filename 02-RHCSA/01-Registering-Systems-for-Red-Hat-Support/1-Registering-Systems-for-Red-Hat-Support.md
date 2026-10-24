@@ -8,7 +8,7 @@ Red Hat delivers RHEL packages and updates through the **Content Delivery Networ
 
 Registration also ***creates the system's identity in Red Hat's hosted services***. Depending on the account and the features you enable, that identity is what the Hybrid Cloud Console, Red Hat Lightspeed, knowledgebase, and support tools use to recognize the system.
 
-Red Hat Lightspeed is the current name of the service formerly called Red Hat Insights. The client command is still `insights-client`.
+**Red Hat Lightspeed is the current name of the service formerly called Red Hat Insights. The client command is still** `insights-client`.
 
 Registration uses the organization's subscriptions. It does not create a new subscription, and it does not grant products the organization has not purchased.
 
