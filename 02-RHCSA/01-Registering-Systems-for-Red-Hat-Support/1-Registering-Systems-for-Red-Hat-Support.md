@@ -22,7 +22,7 @@ Simple Content Access decides *how* content is authorized. Registration is still
 
 ## Simple Content Access
 
-Simple Content Access (SCA) is the current subscription mode. New Red Hat accounts use it by default. The older entitlement mode, where each system had a subscription attached before it could use content, is deprecated.
+**Simple Content Access (SCA)** is the current subscription mode. New Red Hat accounts use it by default. The older entitlement mode, where each system had a subscription attached before it could use content, is deprecated.
 
 Under SCA:
 
