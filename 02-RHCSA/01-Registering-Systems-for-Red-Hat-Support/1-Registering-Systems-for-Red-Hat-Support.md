@@ -6,7 +6,7 @@ Study notes for RHEL system registration. Commands below need root. Behavior mat
 
 Red Hat delivers RHEL packages and updates through the **Content Delivery Network (CDN)**. Those repositories include security fixes and bug fixes. An unregistered system cannot use the **CDN repositories** that require a subscription.
 
-Registration also creates the system's identity in Red Hat's hosted services. Depending on the account and the features you enable, that identity is what the Hybrid Cloud Console, Red Hat Lightspeed, knowledgebase, and support tools use to recognize the system.
+Registration also ***creates the system's identity in Red Hat's hosted services***. Depending on the account and the features you enable, that identity is what the Hybrid Cloud Console, Red Hat Lightspeed, knowledgebase, and support tools use to recognize the system.
 
 Red Hat Lightspeed is the current name of the service formerly called Red Hat Insights. The client command is still `insights-client`.
 
