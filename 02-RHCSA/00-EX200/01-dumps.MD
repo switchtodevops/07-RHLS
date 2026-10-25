@@ -1,4 +1,4 @@
-# RHCSA Mock Exam V10 — EX200 Dumps
+# RHCSA Mock Exam V10 
 
 ## To Be Learned
 - DNF repository configuration
