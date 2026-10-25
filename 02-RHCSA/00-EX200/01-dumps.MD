@@ -88,18 +88,9 @@ The webserver is running on non-standard port 82 and has an issue on `servera` w
 ```bash
 curl localhost:82
 vim /etc/httpd/conf/httpd.conf
-```
-
-Find the `Listen` line and verify it's set to 82:
-
-```apacheconf
 # Listen 12.34.56.78:80
 Listen 82
-```
 
-Allow the firewall and label the port correctly:
-
-```bash
 firewall-cmd --permanent --add-port=82/tcp
 firewall-cmd --reload
 
@@ -109,7 +100,6 @@ semanage port -l | grep http
 
 systemctl restart httpd.service
 systemctl enable httpd.service
-
 curl localhost:82
 ```
 
@@ -150,42 +140,19 @@ Configure autofs to automount the home directory of `remoteuser18` as follows:
 
 **Solution:**
 
-Install the package and enable it:
-
 ```bash
 yum install autofs
 systemctl enable --now autofs
-```
 
-```bash
 vim /etc/auto.master
-```
+# /home /etc/auto.misc
 
-```
-/home /etc/auto.misc
-```
-
-```bash
 vim /etc/auto.misc
-```
+# remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
 
-```
-remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
-```
-
-Restart the autofs service:
-
-```bash
 systemctl restart autofs.service
-```
 
-Verify:
-
-```bash
 cd /home/remoteuser18
 df -hTP /home/remoteuser18
-```
-
-```
-serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
+# serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
 ```
