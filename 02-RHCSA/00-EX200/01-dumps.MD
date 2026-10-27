@@ -154,3 +154,109 @@ $ systemctl restart autofs.service
 $ df -hTP /home/remoteuser18
 serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
 ```
+
+### Question 6: Configure a Cron Job
+
+User `john` must configure a cron job that runs daily at 12:30 local time and executes `/bin/echo "hello world"`.
+
+**Solution:**
+
+```bash
+yum install cronie* -y
+systemctl enable --now crond.service
+
+crontab -u john -e
+# 30 12 * * *  /bin/echo "hello world"
+```
+
+---
+
+### Question 7: Configure an NTP Client
+
+Configure your system so that it is an NTP client of `classroom.example.com`.
+
+**Solution:**
+
+```bash
+vim /etc/chrony.conf
+# server classroom.example.com iburst
+
+timedatectl set-ntp true
+timedatectl
+systemctl restart chronyd.service
+chronyc sources
+
+ping classroom.example.com   # should resolve to the IP shown in the chronyc sources output
+```
+
+---
+
+### Question 8: Locate Files Owned by a User
+
+Locate all the files owned by `michael` and make a copy of them in the given path `/root/find.user`.
+
+**Solution:**
+
+```bash
+mkdir /root/find.user
+find / -user michael -exec cp -prv {} /root/find.user \;
+```
+
+---
+
+### Question 9: Search for a String in a File
+
+Find all occurrences of the string `listen` in `/etc/httpd/conf/httpd.conf` and save the output to `/root/finds`.
+
+**Solution:**
+
+```bash
+grep -i listen /etc/httpd/conf/httpd.conf > /root/finds
+```
+
+---
+
+### Question 10: Create a User Account with a Specific UID
+
+Create a user account with UserID `2345`, username `alex`, and password `compedel`.
+
+**Solution:**
+
+```bash
+useradd -u 2345 alex
+passwd --stdin alex
+```
+
+---
+
+### Question 11: Create a Tar Archive
+
+Back up `/usr/local` as `/root/Backup.tar.gz` using gzip compression.
+
+**Solution:**
+
+```bash
+tar czvf /root/Backup.tar.gz /usr/local
+ls /root/Backup.tar.gz
+```
+
+---
+
+### Question 12: Set Default Permissions with umask
+
+- All newly created files for user `john` should default to `-r---------` (read-only, owner only)
+- All newly created directories for user `john` should default to `dr-x------` (owner only)
+
+**Solution:**
+
+```bash
+su - john
+vim .bashrc
+# umask 277
+
+source .bashrc
+mkdir dir2
+touch file1
+ll
+```
+
