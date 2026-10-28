@@ -178,13 +178,13 @@ Configure your system so that it is an NTP client of `classroom.example.com`.
 **Solution:**
 
 ```bash
-vim /etc/chrony.conf
-# server classroom.example.com iburst
+$ vim /etc/chrony.conf
+ server classroom.example.com iburst
 
-timedatectl set-ntp true
-timedatectl
-systemctl restart chronyd.service
-chronyc sources
+$ systemctl restart chronyd.service
+$ timedatectl set-ntp true
+$ timedatectl
+$ chronyc sources
 
 ping classroom.example.com   # should resolve to the IP shown in the chronyc sources output
 ```
@@ -260,3 +260,97 @@ touch file1
 ll
 ```
 
+### Perform on Node 2
+
+### Question 01: Set the root password 
+  # Set the root password to compedel. you will need to gain access to the system in order to do this. 
+  # Without rescue mode root password recovery.
+  # Open serverb console and open it use ctrl+alt+del and reboot it. 
+  # choose main kernel and press e
+  # Go where linux line write and use ctrl + e you can go end of line and add that line init=/bin/bash
+  # After add that line use cntrl + x to start 
+  # mount -o remount,rw / 
+  # password --stdin root
+  # touch /.autorelabel
+  # exec /sbin/init
+  # vim /etc/ssh/sshd_config
+    PermitRootLogin yes
+  # systemctl restart sshd 
+
+### Question 02: Create a repository file 
+  # ssh root@serverb.lab.example.com
+  # vim /etc/yum.repos.d/local.repo 
+  [BaseOS]
+  name=baseos
+  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/BaseOS
+  enabled=1
+  gpgcheck=0
+
+  [AppStream]
+  name=appstream
+  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/AppStream
+  enabled=1
+  gpgcheck=0
+  ```
+### Question 03: Add a swap partition 
+  Add an additional swap partition of 756Mb to disk /dev/vdb on your system. The swap partition should automatically mount
+  when your system boots. 
+
+  # fdisk /dev/sdb
+    command ( m for help): n
+    Using default response: p 
+    Assigin swap lable to partition 
+  # mkswap /dev/sdb1
+  # vim /etc/fstab 
+  /dev/sdb1   swap  swap defaults   0   0
+  # swapon -a 
+
+### Question 04: Resize a logical volume 
+  Resize the logical volume v0 and its file system to 230Mib, make sure that the filesystem contents remain inact. 
+  Note: Partition are seldom exactly the same size requested , so a size within the range 217 Mib to 243 Mib is acceptable. 
+
+  $ lvs 
+  $ vgs 
+  $ lvresize -L 250M /dev/vogroup/vo 
+  $ resize2fs /dev/vogroup/v0
+
+### Question 05: Configure your system to use flatpak repositories 
+  On your system, confiugre Flatpak so that user student can install the codium from the Flathub repository. The following requirements 
+  must be met:
+
+  A flatpak repository has been made available from: 
+  https://flathub.org/repo/flathub.flatpakrepo
+
+  - Flatpak repository should be named flatdb 
+  - Repository must be configured only for the user student. 
+  - install the codium application for user student
+
+  Solution:
+    $ su student 
+    $ flatpak remote-add --user --if-not-exists flatdb https://flat.hub.org/repo/flathub.flatpakrepo. 
+    $ flatpak install --user flatdb codium 
+    $ which do you want to use (0 to abort) [0 -2 ]: 2
+
+### Questions 6: Create a logica volume
+  Create a new logical volume according to following requirements. 
+    - Logical volume is named qa and belongs to the qagroup volume group and has the size of extends. 
+    - Logical volume in the qagroup volume group should have an extents size of 16Mib 
+    - Physical volume for the logical volume must be placed on disk /dev/vdb 
+    - Format the new logical volume with a ext3 filesystem. The logical 
+
+    $ fdisk /dev/vdb 
+    $ create primary disk 
+    $ assign the tag ( Linux LVM )
+    $ pvcreate /dev/vdb2 
+    $ vgcreate -s 16M qagroup /dev/vdb2 
+    $ lvcreate -n qa -l 60 qagroup 
+    $ lvs 
+    $ mkfs.ext3 /dev/qagroup/qa 
+    $ mkdir /mnt/qa
+    $ vim /etc/fstab 
+      /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
+    $ systemcl daemon-reload
+    $ mount -a 
+    $ lsblk 
+
+###  
