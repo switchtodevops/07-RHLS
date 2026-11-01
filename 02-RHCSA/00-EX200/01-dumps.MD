@@ -86,21 +86,21 @@ The webserver is running on non-standard port 82 and has an issue on `servera` w
 **Solution:**
 
 ```bash
-curl localhost:82
-vim /etc/httpd/conf/httpd.conf
-# Listen 12.34.56.78:80
-Listen 82
+$ curl localhost:82
+$ vim /etc/httpd/conf/httpd.conf
+  # Listen 12.34.56.78:80
+  Listen 82
 
-firewall-cmd --permanent --add-port=82/tcp
-firewall-cmd --reload
+$ firewall-cmd --permanent --add-port=82/tcp
+$ firewall-cmd --reload
 
-semanage port -l | grep http
-semanage port -a -t http_port_t -p tcp 82
-semanage port -l | grep http
+$ semanage port -l | grep http
+$ semanage port -a -t http_port_t -p tcp 82
+$ semanage port -l | grep http
 
-systemctl restart httpd.service
-systemctl enable httpd.service
-curl localhost:82
+$ systemctl restart httpd.service
+$ systemctl enable httpd.service
+$ curl localhost:82
 ```
 
 ---
