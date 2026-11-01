@@ -162,11 +162,10 @@ User `john` must configure a cron job that runs daily at 12:30 local time and ex
 **Solution:**
 
 ```bash
-yum install cronie* -y
-systemctl enable --now crond.service
-
-crontab -u john -e
-# 30 12 * * *  /bin/echo "hello world"
+$ yum install cronie* -y
+$ systemctl enable --now crond.service
+$ crontab -u john -e
+  30 12 * * *  /bin/echo "hello world"
 ```
 
 ---
