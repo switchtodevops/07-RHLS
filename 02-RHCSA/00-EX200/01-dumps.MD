@@ -215,7 +215,7 @@ grep -i listen /etc/httpd/conf/httpd.conf > /root/finds
 
 ---
 
-### Question 10: Create a User Account with a Specific UID
+### Question 10: Create a User Account with a Specific UID (Done)
 
 Create a user account with UserID `2345`, username `alex`, and password `compedel`.
 
