@@ -43,7 +43,7 @@ Workflow:
 
 ---
 
-### Question 2: Create a Repository File
+### Question 2: Create a Repository File (**Done**)
 
 Repositories:
 - AppStream: `http://content.example.com/rhel10.0/x86_64/dvd/AppStream`
