@@ -76,7 +76,7 @@ yum install httpd* -y
 
 ---
 
-### Question 3: Configure SELinux
+### Question 3: Configure SELinux ( Done )
 
 The webserver is running on non-standard port 82 and has an issue on `servera` with web content. Debug and fix the issue:
 - The webserver must be able to serve all existing HTML files located in the `/var/www/html` directory (don't alter or remove any files in this directory)
