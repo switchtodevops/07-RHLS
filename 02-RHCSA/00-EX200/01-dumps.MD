@@ -170,7 +170,7 @@ $ crontab -u john -e
 
 ---
 
-### Question 7: Configure an NTP Client
+### Question 7: Configure an NTP Client (Done)
 
 Configure your system so that it is an NTP client of `classroom.example.com`.
 
