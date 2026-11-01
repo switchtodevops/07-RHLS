@@ -105,7 +105,7 @@ $ curl localhost:82
 
 ---
 
-### Question 4: Create Users and Groups
+### Question 4: Create Users and Groups (Done)
 
 Create the following:
 - A group named `sysmgrs`
