@@ -262,37 +262,66 @@ ll
 
 ### Perform on Node 2
 
-### Question 01: Set the root password 
-  # Set the root password to compedel. you will need to gain access to the system in order to do this. 
-  # Without rescue mode root password recovery.
-  # Open serverb console and open it use ctrl+alt+del and reboot it. 
-  # choose main kernel and press e
-  # Go where linux line write and use ctrl + e you can go end of line and add that line init=/bin/bash
-  # After add that line use cntrl + x to start 
-  # mount -o remount,rw / 
-  # password --stdin root
-  # touch /.autorelabel
-  # exec /sbin/init
-  # vim /etc/ssh/sshd_config
-    PermitRootLogin yes
-  # systemctl restart sshd 
+### Question 1: Recover the Root Password (Without Rescue Mode)
 
-### Question 02: Create a repository file 
-  # ssh root@serverb.lab.example.com
-  # vim /etc/yum.repos.d/local.repo 
-  [BaseOS]
-  name=baseos
-  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/BaseOS
-  enabled=1
-  gpgcheck=0
+Reset the root password on `serverb` without using rescue mode, then allow root to log in over SSH.
 
-  [AppStream]
-  name=appstream
-  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/AppStream
-  enabled=1
-  gpgcheck=0
-  ```
-### Question 03: Add a swap partition 
+**Solution:**
+
+1. Open the `serverb` console and press `Ctrl+Alt+Del` to reboot the system.
+2. At the GRUB boot menu, select the main kernel entry and press `e` to edit it.
+3. Find the line that starts with `linux`, press `Ctrl+E` to jump to the end of it, and append `init=/bin/bash`.
+4. Press `Ctrl+X` (or `F10`) to boot with this change.
+
+```bash
+mount -o remount,rw /
+passwd root
+touch /.autorelabel
+exec /sbin/init
+```
+
+5. After the system reboots and you log back in, allow root login over SSH:
+
+```bash
+vim /etc/ssh/sshd_config
+# PermitRootLogin yes
+
+systemctl enable --now sshd
+systemctl restart sshd
+```
+
+---
+
+### Question 2: Create a Repository File (on serverb)
+
+Repositories:
+- AppStream: `http://content.example.com/rhel10.0/x86_64/dvd/AppStream`
+- BaseOS: `http://content.example.com/rhel10.0/x86_64/dvd/BaseOS`
+
+**Solution:**
+
+```bash
+ssh root@serverb.lab.example.com
+vim /etc/yum.repos.d/local.repo
+```
+
+```ini
+[BaseOS]
+name=baseos
+baseurl=http://content.example.com/rhel10.0/x86_64/dvd/BaseOS
+enabled=1
+gpgcheck=0
+
+[AppStream]
+name=appstream
+baseurl=http://content.example.com/rhel10.0/x86_64/dvd/AppStream
+enabled=1
+gpgcheck=0
+```
+
+---
+
+### Question 3: Add a Swap Partition
   Add an additional swap partition of 756Mb to disk /dev/vdb on your system. The swap partition should automatically mount
   when your system boots. 
 
