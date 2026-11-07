@@ -43,7 +43,7 @@ Workflow:
 
 ---
 
-### Question 2: Create a Repository File ( **Done** )
+### Question 2: Create a Repository File (Done)
 
 Repositories:
 - AppStream: `http://content.example.com/rhel10.0/x86_64/dvd/AppStream`
@@ -76,7 +76,7 @@ yum install httpd* -y
 
 ---
 
-### Question 3: Configure SELinux ( Done )
+### Question 3: Configure SELinux (Done)
 
 The webserver is running on non-standard port 82 and has an issue on `servera` with web content. Debug and fix the issue:
 - The webserver must be able to serve all existing HTML files located in the `/var/www/html` directory (don't alter or remove any files in this directory)
@@ -86,21 +86,21 @@ The webserver is running on non-standard port 82 and has an issue on `servera` w
 **Solution:**
 
 ```bash
-$ curl localhost:82
-$ vim /etc/httpd/conf/httpd.conf
-  # Listen 12.34.56.78:80
-  Listen 82
+curl localhost:82
+vim /etc/httpd/conf/httpd.conf
+# Listen 12.34.56.78:80
+Listen 82
 
-$ firewall-cmd --permanent --add-port=82/tcp
-$ firewall-cmd --reload
+firewall-cmd --permanent --add-port=82/tcp
+firewall-cmd --reload
 
-$ semanage port -l | grep http
-$ semanage port -a -t http_port_t -p tcp 82
-$ semanage port -l | grep http
+semanage port -l | grep http
+semanage port -a -t http_port_t -p tcp 82
+semanage port -l | grep http
 
-$ systemctl restart httpd.service
-$ systemctl enable httpd.service
-$ curl localhost:82
+systemctl restart httpd.service
+systemctl enable httpd.service
+curl localhost:82
 ```
 
 ---
@@ -162,10 +162,11 @@ User `john` must configure a cron job that runs daily at 12:30 local time and ex
 **Solution:**
 
 ```bash
-$ yum install cronie* -y
-$ systemctl enable --now crond.service
-$ crontab -u john -e
-  30 12 * * *  /bin/echo "hello world"
+yum install cronie* -y
+systemctl enable --now crond.service
+
+crontab -u john -e
+# 30 12 * * *  /bin/echo "hello world"
 ```
 
 ---
@@ -177,13 +178,13 @@ Configure your system so that it is an NTP client of `classroom.example.com`.
 **Solution:**
 
 ```bash
-$ vim /etc/chrony.conf
- server classroom.example.com iburst
+vim /etc/chrony.conf
+# server classroom.example.com iburst
 
-$ systemctl restart chronyd.service
-$ timedatectl set-ntp true
-$ timedatectl
-$ chronyc sources
+timedatectl set-ntp true
+timedatectl
+systemctl restart chronyd.service
+chronyc sources
 
 ping classroom.example.com   # should resolve to the IP shown in the chronyc sources output
 ```
