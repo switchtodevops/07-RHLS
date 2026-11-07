@@ -262,7 +262,7 @@ ll
 
 ### Perform on Node 2
 
-### Question 1: Recover the Root Password (Without Rescue Mode)
+### Question 13: Recover the Root Password (Without Rescue Mode)
 
 Reset the root password on `serverb` without using rescue mode, then allow root to log in over SSH.
 
@@ -292,7 +292,7 @@ systemctl restart sshd
 
 ---
 
-### Question 2: Create a Repository File (on serverb)
+### Question 14: Create a Repository File (on serverb)
 
 Repositories:
 - AppStream: `http://content.example.com/rhel10.0/x86_64/dvd/AppStream`
@@ -321,65 +321,94 @@ gpgcheck=0
 
 ---
 
-### Question 3: Add a Swap Partition
-  Add an additional swap partition of 756Mb to disk /dev/vdb on your system. The swap partition should automatically mount
-  when your system boots. 
+### Question 15: Add a Swap Partition
 
-  # fdisk /dev/sdb
-    command ( m for help): n
-    Using default response: p 
-    Assigin swap lable to partition 
-  # mkswap /dev/sdb1
-  # vim /etc/fstab 
-  /dev/sdb1   swap  swap defaults   0   0
-  # swapon -a 
+Add an additional swap partition of 756MB to disk `/dev/vdb` on your system. The swap partition should automatically mount when your system boots.
 
-### Question 04: Resize a logical volume 
-  Resize the logical volume v0 and its file system to 230Mib, make sure that the filesystem contents remain inact. 
-  Note: Partition are seldom exactly the same size requested , so a size within the range 217 Mib to 243 Mib is acceptable. 
+**Solution:**
 
-  $ lvs 
-  $ vgs 
-  $ lvresize -L 250M /dev/vogroup/vo 
-  $ resize2fs /dev/vogroup/v0
+```bash
+fdisk /dev/vdb
+# n (new partition), p (primary), accept the default start, size +756M
+# t -> select the new partition -> 82 (Linux swap)
+# w (write changes)
 
-### Question 05: Configure your system to use flatpak repositories 
-  On your system, confiugre Flatpak so that user student can install the codium from the Flathub repository. The following requirements 
-  must be met:
+partprobe /dev/vdb
+mkswap /dev/vdb1
 
-  A flatpak repository has been made available from: 
-  https://flathub.org/repo/flathub.flatpakrepo
+vim /etc/fstab
+# /dev/vdb1   swap  swap  defaults   0   0
 
-  - Flatpak repository should be named flatdb 
-  - Repository must be configured only for the user student. 
-  - install the codium application for user student
+swapon -a
+swapon -s
+```
 
-  Solution:
-    $ su student 
-    $ flatpak remote-add --user --if-not-exists flatdb https://flat.hub.org/repo/flathub.flatpakrepo. 
-    $ flatpak install --user flatdb codium 
-    $ which do you want to use (0 to abort) [0 -2 ]: 2
+---
 
-### Questions 6: Create a logica volume
-  Create a new logical volume according to following requirements. 
-    - Logical volume is named qa and belongs to the qagroup volume group and has the size of extends. 
-    - Logical volume in the qagroup volume group should have an extents size of 16Mib 
-    - Physical volume for the logical volume must be placed on disk /dev/vdb 
-    - Format the new logical volume with a ext3 filesystem. The logical 
+### Question 16: Resize a Logical Volume
 
-    $ fdisk /dev/vdb 
-    $ create primary disk 
-    $ assign the tag ( Linux LVM )
-    $ pvcreate /dev/vdb2 
-    $ vgcreate -s 16M qagroup /dev/vdb2 
-    $ lvcreate -n qa -l 60 qagroup 
-    $ lvs 
-    $ mkfs.ext3 /dev/qagroup/qa 
-    $ mkdir /mnt/qa
-    $ vim /etc/fstab 
-      /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
-    $ systemcl daemon-reload
-    $ mount -a 
-    $ lsblk 
+Resize the logical volume `v0` and its file system to 230MiB, making sure the filesystem contents remain intact.
+Note: Partitions are seldom exactly the requested size, so a size within the range 217MiB to 243MiB is acceptable.
 
-###  
+**Solution:**
+
+```bash
+lvs
+vgs
+lvresize -L 230M /dev/vogroup/v0
+resize2fs /dev/vogroup/v0
+```
+
+---
+
+### Question 17: Configure Flatpak Repositories
+
+Configure Flatpak on your system so that user `student` can install Codium from the Flathub repository. The following requirements must be met:
+- A Flatpak repository has been made available from: `https://flathub.org/repo/flathub.flatpakrepo`
+- The Flatpak repository should be named `flatdb`
+- The repository must be configured only for the user `student`
+- Install the `codium` application for user `student`
+
+**Solution:**
+
+```bash
+su - student
+flatpak remote-add --user --if-not-exists flatdb https://flathub.org/repo/flathub.flatpakrepo
+flatpak install --user flatdb codium
+# Which do you want to use (0 to abort) [0-2]: 2
+```
+
+---
+
+### Question 18: Create a Logical Volume
+
+Create a new logical volume according to the following requirements:
+- The logical volume is named `qa` and belongs to the `qagroup` volume group
+- The `qagroup` volume group should have an extent size of 16MiB
+- The physical volume for the logical volume must be placed on disk `/dev/vdb`
+- Format the new logical volume with an ext3 filesystem and mount it at `/mnt/qa`
+
+**Solution:**
+
+```bash
+fdisk /dev/vdb
+# n (new partition), p (primary)
+# t -> select the new partition -> 8e (Linux LVM)
+# w (write changes)
+
+partprobe /dev/vdb
+pvcreate /dev/vdb2
+vgcreate -s 16M qagroup /dev/vdb2
+lvcreate -n qa -l 60 qagroup
+lvs
+
+mkfs.ext3 /dev/qagroup/qa
+mkdir /mnt/qa
+
+vim /etc/fstab
+# /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
+
+systemctl daemon-reload
+mount -a
+lsblk
+```
