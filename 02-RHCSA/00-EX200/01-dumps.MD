@@ -141,19 +141,22 @@ Configure autofs to automount the home directory of `remoteuser18` as follows:
 **Solution:**
 
 ```bash
-$ yum install autofs
-$ systemctl enable --now autofs
+yum install autofs
+systemctl enable --now autofs
 
-$ vim /etc/auto.master
-/home /etc/auto.misc
-$ /home /etc/auto.misc
-remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
+vim /etc/auto.master
+# /home /etc/auto.misc
 
-$ systemctl restart autofs.service
+vim /etc/auto.misc
+# remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
 
-$ df -hTP /home/remoteuser18
-serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
+systemctl restart autofs.service
+
+df -hTP /home/remoteuser18
+# serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
 ```
+
+---
 
 ### Question 6: Configure a Cron Job
 
