@@ -295,7 +295,7 @@ $ systemctl restart sshd
 
 ---
 
-### Question 14: Create a Repository File (on serverb)
+### Question 02: Create a Repository File (on serverb)
 
 Repositories:
 - AppStream: `http://content.example.com/rhel10.0/x86_64/dvd/AppStream`
@@ -304,25 +304,25 @@ Repositories:
 **Solution:**
 
 ```bash
-ssh root@serverb.lab.example.com
-vim /etc/yum.repos.d/local.repo
+$ ssh root@serverb.lab.example.com
+$ vim /etc/yum.repos.d/local.repo
 ```
 
-```ini
-[BaseOS]
-name=baseos
-baseurl=http://content.example.com/rhel10.0/x86_64/dvd/BaseOS
-enabled=1
-gpgcheck=0
+  ```ini
+  [BaseOS]
+  name=baseos
+  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/BaseOS
+  enabled=1
+  gpgcheck=0
 
-[AppStream]
-name=appstream
-baseurl=http://content.example.com/rhel10.0/x86_64/dvd/AppStream
-enabled=1
-gpgcheck=0
-```
+  [AppStream]
+  name=appstream
+  baseurl=http://content.example.com/rhel10.0/x86_64/dvd/AppStream
+  enabled=1
+  gpgcheck=0
+  ```
 
----
+  ---
 
 ### Question 15: Add a Swap Partition
 
