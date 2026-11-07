@@ -265,7 +265,7 @@ ll
 
 ### Perform on Node 2
 
-### Question 13: Recover the Root Password (Without Rescue Mode)
+### Question 01: Recover the Root Password (Without Rescue Mode)
 
 Reset the root password on `serverb` without using rescue mode, then allow root to log in over SSH.
 
@@ -277,20 +277,20 @@ Reset the root password on `serverb` without using rescue mode, then allow root 
 4. Press `Ctrl+X` (or `F10`) to boot with this change.
 
 ```bash
-mount -o remount,rw /
-passwd root
-touch /.autorelabel
-exec /sbin/init
+$ mount -o remount,rw /
+$ passwd root
+$ touch /.autorelabel
+$ exec /sbin/init
 ```
 
 5. After the system reboots and you log back in, allow root login over SSH:
 
 ```bash
-vim /etc/ssh/sshd_config
+$ vim /etc/ssh/sshd_config
 # PermitRootLogin yes
 
-systemctl enable --now sshd
-systemctl restart sshd
+$ systemctl enable --now sshd
+$ systemctl restart sshd
 ```
 
 ---
