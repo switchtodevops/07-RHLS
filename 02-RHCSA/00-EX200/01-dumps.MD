@@ -287,7 +287,7 @@ $ exec /sbin/init
 
 ```bash
 $ vim /etc/ssh/sshd_config
-# PermitRootLogin yes
+  PermitRootLogin yes
 
 $ systemctl enable --now sshd
 $ systemctl restart sshd
