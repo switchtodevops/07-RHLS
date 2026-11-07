@@ -322,24 +322,36 @@ $ vim /etc/yum.repos.d/local.repo
 
   ---
 
-### Question 15: Add a Swap Partition
+### Question 03: Add a Swap Partition
 
 Add an additional swap partition of 756MB to disk `/dev/vdb` on your system. The swap partition should automatically mount when your system boots.
 
 **Solution:**
 
+1. Create a new primary partition with `fdisk`:
+
 ```bash
 fdisk /dev/vdb
 # n (new partition), p (primary), accept the default start, size +756M
-# t -> select the new partition -> 82 (Linux swap)
 # w (write changes)
+```
 
-partprobe /dev/vdb
+2. Initialize the swap area:
+
+```bash
 mkswap /dev/vdb1
+```
 
+3. Add the swap entry to `/etc/fstab`:
+
+```bash
 vim /etc/fstab
-# /dev/vdb1   swap  swap  defaults   0   0
+# /dev/vdb1   swap  swap  defaults  0 0
+```
 
+4. Enable swap and list it:
+
+```bash
 swapon -a
 swapon -s
 ```
