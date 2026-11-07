@@ -302,12 +302,10 @@ Repositories:
 - BaseOS: `http://content.example.com/rhel10.0/x86_64/dvd/BaseOS`
 
 **Solution:**
-
 ```bash
 $ ssh root@serverb.lab.example.com
 $ vim /etc/yum.repos.d/local.repo
 ```
-
   ```ini
   [BaseOS]
   name=baseos
