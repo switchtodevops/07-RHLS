@@ -405,26 +405,26 @@ Create a new logical volume according to the following requirements:
 **Solution:**
 
 ```bash
-  fdisk /dev/vdb
-  # n (new partition), p (primary)
-  # t -> select the new partition -> 8e (Linux LVM)
-  # w (write changes)
+  $ fdisk /dev/vdb
+    n (new partition), p (primary)
+    t -> select the new partition -> 8e (Linux LVM)
+    w (write changes)
 
-  partprobe /dev/vdb
-  pvcreate /dev/vdb2
-  vgcreate -s 16M qagroup /dev/vdb2
-  lvcreate -n qa -l 60 qagroup
-  lvs
+  $ partprobe /dev/vdb
+  $ pvcreate /dev/vdb2
+  $ vgcreate -s 16M qagroup /dev/vdb2
+  $ lvcreate -n qa -l 60 qagroup
+  $ lvs
 
-  mkfs.ext3 /dev/qagroup/qa
-  mkdir /mnt/qa
+  $ mkfs.ext3 /dev/qagroup/qa
+  $ mkdir /mnt/qa
 
-  vim /etc/fstab
-  # /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
+  $ vim /etc/fstab
+    /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
 
-  systemctl daemon-reload
-  mount -a
-  lsblk
+  $ systemctl daemon-reload
+  $ mount -a
+  $ lsblk
 ```
 
 ### Question 07: Configure system tunning
