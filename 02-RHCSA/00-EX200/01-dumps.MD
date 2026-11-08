@@ -358,7 +358,7 @@ swapon -s
 
 ---
 
-### Question 03: Resize a Logical Volume
+### Question 04: Resize a Logical Volume
 
 Resize the logical volume `v0` and its file system to 230MiB, making sure the filesystem contents remain intact.
 Note: Partitions are seldom exactly the requested size, so a size within the range 217MiB to 243MiB is acceptable.
@@ -375,7 +375,7 @@ Note: Partitions are seldom exactly the requested size, so a size within the ran
 
 ---
 
-### Question 17: Configure Flatpak Repositories
+### Question 05: Configure Flatpak Repositories
 
 Configure Flatpak on your system so that user `student` can install Codium from the Flathub repository. The following requirements must be met:
 - A Flatpak repository has been made available from: `https://flathub.org/repo/flathub.flatpakrepo`
@@ -394,35 +394,35 @@ flatpak install --user flatdb codium
 
 ---
 
-### Question 18: Create a Logical Volume
+### Question 06: Create a Logical Volume
 
 Create a new logical volume according to the following requirements:
-- The logical volume is named `qa` and belongs to the `qagroup` volume group
-- The `qagroup` volume group should have an extent size of 16MiB
+- The logical volume is named `qa` and belongs to the `qagroup` volume group and has a size of 60 extents. 
+- Logical volume in the `qagroup` volume group should have an extent size of 16MiB
 - The physical volume for the logical volume must be placed on disk `/dev/vdb`
-- Format the new logical volume with an ext3 filesystem and mount it at `/mnt/qa`
+- Format the new logical volume with an ext3 filesystem and the logical volume should be automatically mount under /mnt/qa system boot time. 
 
 **Solution:**
 
 ```bash
-fdisk /dev/vdb
-# n (new partition), p (primary)
-# t -> select the new partition -> 8e (Linux LVM)
-# w (write changes)
+  fdisk /dev/vdb
+  # n (new partition), p (primary)
+  # t -> select the new partition -> 8e (Linux LVM)
+  # w (write changes)
 
-partprobe /dev/vdb
-pvcreate /dev/vdb2
-vgcreate -s 16M qagroup /dev/vdb2
-lvcreate -n qa -l 60 qagroup
-lvs
+  partprobe /dev/vdb
+  pvcreate /dev/vdb2
+  vgcreate -s 16M qagroup /dev/vdb2
+  lvcreate -n qa -l 60 qagroup
+  lvs
 
-mkfs.ext3 /dev/qagroup/qa
-mkdir /mnt/qa
+  mkfs.ext3 /dev/qagroup/qa
+  mkdir /mnt/qa
 
-vim /etc/fstab
-# /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
+  vim /etc/fstab
+  # /dev/mapper/qagroup-qa    /mnt/qa   ext3  defaults  0 0
 
-systemctl daemon-reload
-mount -a
-lsblk
+  systemctl daemon-reload
+  mount -a
+  lsblk
 ```
