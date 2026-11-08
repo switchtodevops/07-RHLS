@@ -174,22 +174,22 @@ crontab -u john -e
 
 ---
 
-### Question 7: Configure an NTP Client (Done)
+### Question 7: Configure an NTP Client
 
 Configure your system so that it is an NTP client of `classroom.example.com`.
 
 **Solution:**
 
 ```bash
-vim /etc/chrony.conf
-# server classroom.example.com iburst
+  $ vim /etc/chrony.conf
+    server classroom.example.com iburst
 
-timedatectl set-ntp true
-timedatectl
-systemctl restart chronyd.service
-chronyc sources
+  $ timedatectl set-ntp true
+  $ timedatectl
+  $ systemctl restart chronyd.service
+  $ chronyc sources
 
-ping classroom.example.com   # should resolve to the IP shown in the chronyc sources output
+  $ ping classroom.example.com   # should resolve to the IP shown in the chronyc sources output
 ```
 
 ---
