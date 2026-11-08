@@ -201,8 +201,8 @@ Locate all the files owned by `michael` and make a copy of them in the given pat
 **Solution:**
 
 ```bash
-mkdir /root/find.user
-find / -user michael -exec cp -prv {} /root/find.user \;
+  $ mkdir -p /root/find.user
+  $ find / -type f -user michael -exec cp -prvf {} /tmp/bkp \;
 ```
 
 ---
