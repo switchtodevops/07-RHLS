@@ -386,10 +386,10 @@ Configure Flatpak on your system so that user `student` can install Codium from 
 **Solution:**
 
 ```bash
-su - student
-flatpak remote-add --user --if-not-exists flatdb https://flathub.org/repo/flathub.flatpakrepo
-flatpak install --user flatdb codium
-# Which do you want to use (0 to abort) [0-2]: 2
+  $ su - student
+  $ flatpak remote-add --user --if-not-exists flatdb https://flathub.org/repo/flathub.flatpakrepo
+  $ flatpak install --user flatdb codium
+  # Which do you want to use (0 to abort) [0-2]: 2
 ```
 
 ---
