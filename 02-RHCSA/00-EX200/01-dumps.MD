@@ -429,3 +429,10 @@ Create a new logical volume according to the following requirements:
 
 ### Question 07: Configure system tunning
 Choose the recommended tuned profile for your system and set it as default
+
+```bash
+  $ systemctl status tuned 
+  $ tuned-adm recommend 
+  $ tuned-adm profile virtual-guest 
+  $ tuned-adm active 
+```
