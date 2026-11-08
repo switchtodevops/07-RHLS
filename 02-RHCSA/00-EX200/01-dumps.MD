@@ -426,3 +426,6 @@ Create a new logical volume according to the following requirements:
   mount -a
   lsblk
 ```
+
+### Question 07: Configure system tunning
+Choose the recommended tuned profile for your system and set it as default
