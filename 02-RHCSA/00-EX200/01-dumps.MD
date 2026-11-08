@@ -263,12 +263,12 @@ ls /root/Backup.tar.gz
   $ ll
 ```
 **Logic:**
-  # Files: 666 (rw-rw-rw-) — files don’t get execute permission by default.
-  # Directories: 777 (rwxrwxrwx) — directories need execute permission to be entered.
-  # For example, umask 022 blocks write permission for group and others:
-  # File:      666 → 644  (-rw-r--r--)
-  # Directory: 777 → 755  (drwxr-xr-x)
-  
+  - Files: 666 (rw-rw-rw-) — files don’t get execute permission by default.
+  - Directories: 777 (rwxrwxrwx) — directories need execute permission to be entered.
+  - For example, umask 022 blocks write permission for group and others:
+  - File:      666 → 644  (-rw-r--r--)
+  - Directory: 777 → 755  (drwxr-xr-x)
+
 
 ### Perform on Node 2
 
