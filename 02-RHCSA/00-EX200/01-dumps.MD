@@ -253,14 +253,14 @@ ls /root/Backup.tar.gz
 **Solution:**
 
 ```bash
-su - john
-vim .bashrc
-# umask 277
+  $ su - john
+  $ vim .bashrc
+    umask 277
 
-source .bashrc
-mkdir dir2
-touch file1
-ll
+  $ source .bashrc
+  $ mkdir dir2
+  $ touch file1
+  $ ll
 ```
 
 ### Perform on Node 2
