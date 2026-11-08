@@ -232,7 +232,7 @@ passwd --stdin alex
 
 ---
 
-### Question 11: Create a Tar Archive (Done)
+### Question 11: Create a Tar Archive
 
 Back up `/usr/local` as `/root/Backup.tar.gz` using gzip compression.
 
