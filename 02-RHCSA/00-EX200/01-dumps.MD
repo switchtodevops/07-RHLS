@@ -391,9 +391,7 @@ Configure Flatpak on your system so that user `student` can install Codium from 
   $ flatpak install --user flatdb codium
   # Which do you want to use (0 to abort) [0-2]: 2
 ```
-
 ---
-
 ### Question 06: Create a Logical Volume
 
 Create a new logical volume according to the following requirements:
