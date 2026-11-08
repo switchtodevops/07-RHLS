@@ -358,7 +358,7 @@ swapon -s
 
 ---
 
-### Question 16: Resize a Logical Volume
+### Question 03: Resize a Logical Volume
 
 Resize the logical volume `v0` and its file system to 230MiB, making sure the filesystem contents remain intact.
 Note: Partitions are seldom exactly the requested size, so a size within the range 217MiB to 243MiB is acceptable.
@@ -366,10 +366,11 @@ Note: Partitions are seldom exactly the requested size, so a size within the ran
 **Solution:**
 
 ```bash
-lvs
-vgs
-lvresize -L 230M /dev/vogroup/v0
-resize2fs /dev/vogroup/v0
+  $ lvs
+  $ vgs
+  $ lvresize -L 230M /dev/vogroup/v0
+  $ resize2fs /dev/vogroup/v0     # for ext2/3/4 file system 
+  $ xfs_growfs /mountpoint        # for xfs file system
 ```
 
 ---
