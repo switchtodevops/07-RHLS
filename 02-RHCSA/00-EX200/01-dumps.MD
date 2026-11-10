@@ -269,6 +269,21 @@ ls /root/Backup.tar.gz
   - File:      666 → 644  (-rw-r--r--)
   - Directory: 777 → 755  (drwxr-xr-x)
 
+### Question 13: Configure a recurring systemd timer job:
+- Create script /usr/local/bin/log_caputre/ to list files in /tmp into /root/log_output/system_log.trc (excutable)
+- Create service unit log_capture.service and timer unit log_capture.timer to trigger every 1 minute enabled persistently. 
+Note: ( In the real RHCSA/RHCE exam, some automation tasks (like the lookup question) require you to install specific RPM packages.
+For example:
+- lookup-1.0-1.fc42.noarch package
+- Provides /usr/local/bin/lookup script + preconfigured systemd units
+But in a practice environment, those packages may not be available)
+
+- Create a script /usr/local/bin/log_capture that lists all files in /tmp and saves the output to /root/log_output/system_logs.trc.
+- Make sure the script is executable
+- Create a systemd service unit log_capture.service that runs the script
+- Create a systemd timer unit log_capture. timer that triggers the service every 1 minutes.
+- Enable and start the timer so it begins working immediately and continues after reboots.
+- Verify the timer is active and confirm that /root/log_output/system_logs.trc is updated.
 
 ### Perform on Node 2
 
