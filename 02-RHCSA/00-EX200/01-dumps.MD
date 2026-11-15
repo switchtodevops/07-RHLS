@@ -141,19 +141,19 @@ Configure autofs to automount the home directory of `remoteuser18` as follows:
 **Solution:**
 
 ```bash
-yum install autofs
-systemctl enable --now autofs
+  $ yum install autofs
+  $ systemctl enable --now autofs
 
-vim /etc/auto.master
-# /home /etc/auto.misc
+  $ vim /etc/auto.master
+  /home /etc/auto.misc$
 
-vim /etc/auto.misc
-# remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
+  $ vim /etc/auto.misc
+   remoteuser18 -rw,sync serverb.lab.example.com:/rhome/&
 
-systemctl restart autofs.service
+  $ systemctl restart autofs.service
 
-df -hTP /home/remoteuser18
-# serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
+  $ df -hTP /home/remoteuser18
+    serverb.lab.example.com     9.4G  1.7G  7.7G    18%  /home/remoteuser18
 ```
 
 ---
@@ -284,6 +284,11 @@ But in a practice environment, those packages may not be available)
 - Create a systemd timer unit log_capture. timer that triggers the service every 1 minutes.
 - Enable and start the timer so it begins working immediately and continues after reboots.
 - Verify the timer is active and confirm that /root/log_output/system_logs.trc is updated.
+
+```bash
+  $ yum install lo
+```
+
 
 ### Perform on Node 2
 
